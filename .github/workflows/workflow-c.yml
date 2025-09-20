@@ -1,0 +1,13 @@
+name: workflow C (disabled)
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  hello-world:
+    if: ${{ false }}  # This condition disables the workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "Hello World"
