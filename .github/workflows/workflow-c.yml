@@ -1,4 +1,4 @@
-name: workflow C
+name: workflow C (disabled)
 
 on:
   pull_request:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   hello-world:
+    if: ${{ false }}  # This condition disables the workflow
     runs-on: ubuntu-latest
     steps:
       - name: Say Hello
