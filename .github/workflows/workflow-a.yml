@@ -20,5 +20,5 @@ jobs:
           event-type: trigger-workflow-b
           client-payload: |
             {
-              "release": "${{ github.ref_name }}"
+              "github": ${{ toJson(github) }}'
             }
