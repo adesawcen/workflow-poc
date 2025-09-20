@@ -8,4 +8,4 @@ jobs:
   run-b:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Release = ${{ github.event.client_payload.github }}"
+      - run: echo "Release = ${{ toJson(github.event.client_payload.github) }}"
