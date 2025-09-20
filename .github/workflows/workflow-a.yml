@@ -18,7 +18,4 @@ jobs:
           token: ${{ secrets.PAT }}   # MUST be a PAT, not GITHUB_TOKEN
           repository: ${{ github.repository }}
           event-type: trigger-workflow-b
-          client-payload: |
-            {
-              "github": ${{ toJson(github) }}'
-            }
+          client-payload: '{"github": ${{ toJson(github) }}}'
