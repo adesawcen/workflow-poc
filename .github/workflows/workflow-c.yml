@@ -1,0 +1,12 @@
+name: workflow C
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "Hello World"
