@@ -1,4 +1,16 @@
 name: workflow A
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    branches:
+      - develop
+      - main
+
+  push:
+    branches:
+      - develop
+      - main
+
 jobs:
   special-job:
     runs-on: ubuntu-latest
