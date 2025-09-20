@@ -3,10 +3,8 @@ name: workflow b
 on:
   workflow_dispatch:
 
-
 jobs:
   run-b:
     runs-on: ubuntu-latest
-    steps:
-      
+    steps:      
       - run: echo "Release = ${{ github.event.client_payload.release }}"
