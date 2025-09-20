@@ -1,10 +1,11 @@
-name: workflow B
+name: workflow b
 
 on:
-  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-workflow-b]
 
 jobs:
   run-b:
     runs-on: ubuntu-latest
-    steps:      
-      - run: echo "Release = " ## \$ {{ github.event.client_payload.release }}
+    steps:
+      - run: echo "Release = " # $ {{ github.event.client_payload.release }}"
