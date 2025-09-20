@@ -1,4 +1,4 @@
-name: workflow b
+name: workflow B
 
 on:
   workflow_dispatch:
@@ -7,4 +7,4 @@ jobs:
   run-b:
     runs-on: ubuntu-latest
     steps:      
-      - run: echo "Release = ${{ github.event.client_payload.release }}"
+      - run: echo "Release = " ## \$ {{ github.event.client_payload.release }}
