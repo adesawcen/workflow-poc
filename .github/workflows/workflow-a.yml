@@ -13,7 +13,7 @@ jobs:
       - run: echo "Do some work"
 
       - name: Trigger Workflow B
-        uses: peter-evans/repository-dispatch@v3.0.0
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT }}   # MUST be a PAT, not GITHUB_TOKEN
           repository: ${{ github.repository }}
