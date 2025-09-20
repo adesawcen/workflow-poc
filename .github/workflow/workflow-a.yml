@@ -1,0 +1,17 @@
+name: workflow A
+jobs:
+  special-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Do some work"
+
+      - name: Trigger Workflow B
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT }}   # MUST be a PAT, not GITHUB_TOKEN
+          repository: ${{ github.repository }}
+          event-type: trigger-workflow-b
+          client-payload: |
+            {
+              "release": "${{ github.ref_name }}"
+            }
