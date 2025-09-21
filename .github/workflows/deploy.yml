@@ -24,6 +24,7 @@ jobs:
     needs: extract-info
     if: needs.extract-info.outputs.branch == 'develop'
     runs-on: ubuntu-latest
+    environment: QA
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -39,6 +40,7 @@ jobs:
     needs: [extract-info, deploy-to-qa]
     if: needs.extract-info.outputs.branch == 'develop'
     runs-on: ubuntu-latest
+    environment: Stage
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -54,6 +56,7 @@ jobs:
     needs: [extract-info, deploy-to-stage]
     if: needs.extract-info.outputs.branch == 'develop'
     runs-on: ubuntu-latest
+    environment: Prod
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
