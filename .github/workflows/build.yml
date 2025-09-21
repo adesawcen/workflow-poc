@@ -4,13 +4,30 @@ on:
     types: [opened, reopened, edited, synchronize]
     branches:
       - develop
-      - main
+      - hotfix
+    #paths-ignore:
+    #  - .github/**
+  push:
+    branches:
+      - develop
+      - hotfix
+    #paths-ignore:
+    #  - .github/**
 
 jobs:
-  special-job:
+  build-only:
+    if: github.event_name != 'push' && github.event.pull_request.head.ref != 'develop' && github.event.pull_request.head.ref != 'hotfix'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Do some work"
+      - name: build only
+        run: echo "Do build only work"
+
+  build-and-deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: build before deploy
+        run: echo "Do build before deploy"
 
       - name: Trigger Deploy
         uses: peter-evans/repository-dispatch@v3
