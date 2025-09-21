@@ -1,4 +1,4 @@
-name: workflow A
+name: build
 on:
   pull_request:
     types: [opened, reopened, edited, synchronize]
@@ -12,13 +12,10 @@ jobs:
     steps:
       - run: echo "Do some work"
 
-      - name: Trigger Workflow B
-        uses: peter-evans/repository-dispatch@v3.0.0
+      - name: Trigger Deploy
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT }}   # MUST be a PAT, not GITHUB_TOKEN
           repository: ${{ github.repository }}
-          event-type: trigger-workflow-b
-          client-payload: |
-            {
-              "release": "${{ github.ref_name }}"
-            }
+          event-type: trigger-reploy
+          client-payload: '{"github": ${{ toJson(github) }}}'

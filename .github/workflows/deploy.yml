@@ -1,0 +1,74 @@
+name: deploy
+
+on:
+  repository_dispatch:
+    types: [trigger-reploy]
+
+jobs:
+  # Extract branch information from the payload
+  extract-info:
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.extract-branch.outputs.branch }}
+      ref: ${{ steps.extract-branch.outputs.ref }}
+    steps:
+      - id: extract-branch
+        run: |
+          BRANCH="${{ github.event.client_payload.github.ref }}"
+          echo "branch=${BRANCH#refs/heads/}" >> $GITHUB_OUTPUT
+          echo "ref=${{ github.event.client_payload.github.ref }}" >> $GITHUB_OUTPUT
+      - run: echo "Triggered from branch ${{ steps.extract-branch.outputs.branch }}"
+
+  # Deploy to QA environment
+  deploy-to-qa:
+    needs: extract-info
+    if: needs.extract-info.outputs.branch == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Deploy to QA
+        run: |
+          echo "Deploying to QA environment..."
+          # Add actual deployment commands here
+          echo "QA deployment completed"
+
+  # Deploy to Stage environment
+  deploy-to-stage:
+    needs: [extract-info, deploy-to-qa]
+    if: needs.extract-info.outputs.branch == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Deploy to Stage
+        run: |
+          echo "Deploying to Stage environment..."
+          # Add actual deployment commands here
+          echo "Stage deployment completed"
+
+  # Deploy to Production environment
+  deploy-to-prod:
+    needs: [extract-info, deploy-to-stage]
+    if: needs.extract-info.outputs.branch == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to Production environment..."
+          # Add actual deployment commands here
+          echo "Production deployment completed"
+
+  # For non-develop branches, just log the event
+  log-event:
+    needs: extract-info
+    if: needs.extract-info.outputs.branch != 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deployment not triggered for branch ${{ needs.extract-info.outputs.branch }}"
+      - run: echo "Release = ${{ toJson(github.event.client_payload.github) }}"
